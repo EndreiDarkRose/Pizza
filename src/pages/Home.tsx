@@ -19,32 +19,29 @@ import {
 import { fetchPizzas } from "../redux/slice/pizzaSlice";
 import { useNavigate } from "react-router-dom";
 
-export const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
-  const categoryId = useSelector((state) => state.filter.categoryId);
-  const sortType = useSelector((state) => state.filter.sortType);
-  const currentPage = useSelector((state) => state.filter.currentPage);
-
-  const items = useSelector((state) => state.pizza.items);
-
-  const onClickCategories = (id) => {
-    dispatch(setCategoryId(id));
-  };
-  const onClickSelected = (obj) => {
-    dispatch(setSortType(obj));
-  };
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
-  };
-
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  const [searchValue, setSearchValue] = React.useState("");
+  const [_, setIsLoading] = React.useState(true);
+  const { searchValue } = useSelector((state: any) => state.filter);
+  const { items, status } = useSelector((state: any) => state.pizza);
 
   const search = searchValue ? `&search=${searchValue}` : "";
+  const { categoryId, sortType, currentPage } = useSelector(
+    (state: any) => state.filter
+  );
+
+  const onClickCategories = (id: number) => {
+    dispatch(setCategoryId(id));
+  };
+  const onClickSelected = (obj: object) => {
+    dispatch(setSortType(obj));
+  };
+  const onChangePage = (number: number) => {
+    dispatch(setCurrentPage(number));
+  };
 
   React.useEffect(() => {
     if (window.location.search) {
@@ -78,17 +75,18 @@ export const Home = () => {
   }, [sortType, categoryId, currentPage]);
 
   const getPizzas = () => {
-    dispatch(fetchPizzas({ currentPage, sortType, categoryId, search }))
-      .then(setIsLoading(false))
-      .then(setIsLoading(true));
+    // @ts-ignore
+    dispatch(fetchPizzas({ currentPage, sortType, categoryId, search })).then(
+      setIsLoading(false)
+    );
   };
 
   const contentLoader = [...Array(4)].map((_, index) => (
     <ContentLoaderPizza key={index} />
   ));
 
-  const pizzas = items.map((item, index) => (
-    <PizzaBlock {...item} key={index} />
+  const pizzas = items.map((item: any) => (
+    <PizzaBlock {...item} key={item.id} />
   ));
 
   return (
@@ -96,22 +94,28 @@ export const Home = () => {
       <div className="container">
         <div className="content__top">
           <Categories
-            value={categoryId}
-            onClickCategories={(id) => onClickCategories(id)}
+            categoryId={categoryId}
+            onClickCategories={(id: number) => onClickCategories(id)}
           />
           <Sort
             sortType={sortType}
-            onClickSelected={(obj) => onClickSelected(obj)}
+            onClickSelected={(obj: object) => onClickSelected(obj)}
           />
         </div>
         <div className="content-header">
           <h2 className="content__title">Все пиццы</h2>
-          <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+          <Search />
         </div>
-        <div className="content__items">
-          {isLoading ? contentLoader : pizzas}
-        </div>
-        <Pagination onChangePage={(number) => onChangePage(number)} />
+        {status === `error` ? (
+          <div className="content__error-info">
+            <h1>Произошла ошибка</h1> <p>Не удалось получить пиццы</p>
+          </div>
+        ) : (
+          <div className="content__items">
+            {status === "loading" ? contentLoader : pizzas}
+          </div>
+        )}
+        <Pagination onChangePage={(page: number) => onChangePage(page)} />
       </div>
     </>
   );

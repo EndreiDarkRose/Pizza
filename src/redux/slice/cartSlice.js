@@ -5,7 +5,7 @@ const initialState = {
   totalPrice: 0,
 };
 
-const sumTotalPrice = (state, action) =>
+const sumTotalPrice = (state) =>
   (state.totalPrice = state.items.reduce((sum, obj) => {
     return obj.price * obj.count + sum;
   }, 0));
@@ -40,6 +40,8 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const selectorCart = (state) => state.cart;
 
 export const { addItems, deleteItems, clearItems, minusItem } =
   cartSlice.actions;

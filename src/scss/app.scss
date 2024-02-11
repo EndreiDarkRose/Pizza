@@ -22,7 +22,9 @@ body {
 }
 
 .content {
-  padding: 40px 0;
+  &__error-info {
+    margin: 40px 0;
+  }
 
   &__error-info {
     margin: 100px auto;
@@ -295,7 +297,7 @@ body {
         border-color: darken($color: $gray-line, $amount: 10);
       }
 
-      svg {
+      img {
         transform: rotate(45deg);
 
         path {
@@ -304,7 +306,7 @@ body {
       }
 
       .button {
-        svg {
+        img {
           width: 11.5px;
           height: 11.5px;
           position: relative;
@@ -324,6 +326,7 @@ body {
     &-details {
       display: flex;
       justify-content: space-between;
+      padding-bottom: 60px;
 
       span {
         font-size: 22px;

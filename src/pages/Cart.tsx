@@ -5,18 +5,20 @@ import CartItem from "../components/CartItem";
 import { Link } from "react-router-dom";
 import CartEmpty from "../components/CartEmpty";
 
-export const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cart.items);
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const countItems = items.reduce((sum, item) => sum + item.count, 0);
+  const { items, totalPrice } = useSelector((state: any) => state.cart);
+
+  const countItems = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
   const onClickDeleteItems = () => dispatch(clearItems());
 
-  console.log(countItems);
   return (
     <div>
       <div className="content">
-        {items.length > 1 ? (
+        {items.length > 0 ? (
           <div className="container container--cart">
             <div className="cart">
               <div className="cart__top">
@@ -58,7 +60,7 @@ export const Cart = () => {
                 </div>
               </div>
               <div className="content__items">
-                {items.map((item) => (
+                {items.map((item: any) => (
                   <CartItem key={item.id} {...item} />
                 ))}
               </div>
@@ -72,17 +74,17 @@ export const Cart = () => {
                     <b>{totalPrice ? totalPrice : 0} ₽</b>
                   </span>
                 </div>
-                <Link to="/">
-                  <div className="cart__bottom-buttons">
+                <div className="cart__bottom-buttons">
+                  <Link to="/">
                     <div className="button button--outline button--add go-back-btn">
                       <img src="assets/img/grey-arrow-left.svg"></img>
                       <span>Вернуться назад</span>
                     </div>
-                    <div className="button pay-btn">
-                      <span>Оплатить сейчас</span>
-                    </div>
+                  </Link>
+                  <div className="button pay-btn">
+                    <span>Оплатить сейчас</span>
                   </div>
-                </Link>
+                </div>
               </div>
             </div>
           </div>

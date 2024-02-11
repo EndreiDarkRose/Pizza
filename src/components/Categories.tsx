@@ -1,6 +1,13 @@
 import React from "react";
 
-function Categories({ value, onClickCategories }) {
+type CategoriesItem = {
+  categoryId: number;
+  onClickCategories: any;
+};
+const Categories: React.FC<CategoriesItem> = ({
+  categoryId,
+  onClickCategories,
+}) => {
   const catagories = [
     "Все",
     "Мясные",
@@ -16,7 +23,7 @@ function Categories({ value, onClickCategories }) {
         {catagories.map((categoriesName, index) => (
           <li
             key={index}
-            className={value === index ? "active" : ""}
+            className={categoryId === index ? "active" : ""}
             onClick={() => onClickCategories(index)}
           >
             {categoriesName}
@@ -25,6 +32,6 @@ function Categories({ value, onClickCategories }) {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;

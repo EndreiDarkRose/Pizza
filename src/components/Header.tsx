@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-function Header() {
-  const { items, totalPrice } = useSelector((state) => state.cart);
+import { selectorCart } from "../redux/slice/cartSlice";
+const Header: React.FC = () => {
+  const { items, totalPrice } = useSelector(selectorCart);
+  const location = useLocation();
+  console.log(location);
   return (
     <div className="header">
       <div className="container">
@@ -14,7 +17,6 @@ function Header() {
             </div>
           </div>
         </Link>
-
         <Link to="/cart">
           <div className="header__cart">
             <button className="button button--cart">
@@ -49,13 +51,18 @@ function Header() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>{items.reduce((sum, item) => sum + item.count, 0)}</span>
+              <span>
+                {items.reduce(
+                  (sum: number, item: { count: number }) => sum + item.count,
+                  0
+                )}
+              </span>
             </button>
           </div>
         </Link>
       </div>
     </div>
   );
-}
+};
 
 export default Header;
