@@ -9,19 +9,20 @@ import ContentLoaderPizza from "../components/PizzaBlock/ContentLoader";
 import Search from "../components/Search";
 import Pagination from "../components/Pagination";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../redux/store";
 import {
   setCategoryId,
   setSortType,
   setCurrentPage,
   setFilters,
 } from "../redux/slice/filterSlice";
-import { fetchPizzas } from "../redux/slice/pizzaSlice";
+import { FetchPizzasArg, fetchPizzas } from "../redux/slice/pizzaSlice";
 import { useNavigate } from "react-router-dom";
-
+import { SortProp } from "../redux/slice/filterSlice";
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   const [_, setIsLoading] = React.useState(true);
@@ -33,23 +34,36 @@ const Home: React.FC = () => {
     (state: any) => state.filter
   );
 
-  const onClickCategories = (id: number) => {
+  const onClickCategories = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
-  const onClickSelected = (obj: object) => {
+  }, []);
+  const onClickSelected = React.useCallback((obj: SortProp) => {
     dispatch(setSortType(obj));
-  };
+  }, []);
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sortParam = sortPopup.find(
-        (obj) => obj.sortProperty === params.sortType
+      const params = qs.parse(
+        window.location.search.substring(1)
+      ) as unknown as FetchPizzasArg;
+      console.log(params);
+
+      const sortType = sortPopup.find(
+        (obj) => obj.sortProperty === (params.sortType as unknown as string)
       );
-      dispatch(setFilters({ ...params, sortParam }));
+      if (sortType) {
+        dispatch(
+          setFilters({
+            currentPage: params.currentPage,
+            sortType: params.sortType,
+            categoryId: params.categoryId,
+            searchValue: params.search,
+          })
+        );
+      }
       isSearch.current = true;
     }
   }, []);
@@ -75,10 +89,8 @@ const Home: React.FC = () => {
   }, [sortType, categoryId, currentPage]);
 
   const getPizzas = () => {
-    // @ts-ignore
-    dispatch(fetchPizzas({ currentPage, sortType, categoryId, search })).then(
-      setIsLoading(false)
-    );
+    dispatch(fetchPizzas({ currentPage, sortType, categoryId, search }));
+    setIsLoading(false);
   };
 
   const contentLoader = [...Array(4)].map((_, index) => (
@@ -95,12 +107,9 @@ const Home: React.FC = () => {
         <div className="content__top">
           <Categories
             categoryId={categoryId}
-            onClickCategories={(id: number) => onClickCategories(id)}
+            onClickCategories={onClickCategories}
           />
-          <Sort
-            sortType={sortType}
-            onClickSelected={(obj: object) => onClickSelected(obj)}
-          />
+          <Sort sortType={sortType} onClickSelected={onClickSelected} />
         </div>
         <div className="content-header">
           <h2 className="content__title">Все пиццы</h2>

@@ -5,6 +5,10 @@ const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectorCart);
   const location = useLocation();
   console.log(location);
+
+  React.useEffect(() => {
+    const json = JSON.stringify(items);
+  }, []);
   return (
     <div className="header">
       <div className="container">
