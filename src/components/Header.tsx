@@ -16,7 +16,7 @@ const Header: React.FC = () => {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to="/React-pizza">
           <div className="header__logo">
             <img width="38" src="/assets/img/pizza-logo.svg" alt="Pizza logo" />
             <div>
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        <Link to="/cart">
+        <Link to="cart">
           <div className="header__cart">
             <button className="button button--cart">
               <span>{totalPrice} ₽</span>

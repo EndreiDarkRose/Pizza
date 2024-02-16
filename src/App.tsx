@@ -13,7 +13,7 @@ const PizzaInfo = React.lazy(() => import("./components/PizzaInfo"));
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="React-pizza" element={<Layout />}>
         <Route index element={<Home />} />
         <Route
           path="cart"

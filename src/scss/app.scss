@@ -343,12 +343,20 @@ body {
       display: flex;
       justify-content: space-between;
       margin-top: 40px;
+      padding-bottom: 40px;
 
+      .pay-btn {
+        font-size: 16px;
+        font-weight: 600;
+        width: 210px;
+        padding: 16px;
+      }
       .go-back-btn {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 210px;
+        padding: 16px;
 
         border-color: darken($color: $gray-line, $amount: 10);
 
@@ -374,13 +382,6 @@ body {
             stroke-width: 2;
           }
         }
-      }
-
-      .pay-btn {
-        font-size: 16px;
-        font-weight: 600;
-        width: 210px;
-        padding: 16px;
       }
     }
   }
@@ -420,6 +421,7 @@ body {
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+      margin-bottom: 40px;
     }
   }
 }
