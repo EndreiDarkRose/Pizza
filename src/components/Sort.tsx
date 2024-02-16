@@ -1,6 +1,6 @@
 import React from "react";
 import { SortProp } from "../redux/slice/filterSlice";
-import { useWhyDidYouUpdate } from "ahooks";
+
 export const sortPopup: SortProp[] = [
   { name: "популярности", sortProperty: "rating" },
   { name: "цене", sortProperty: "price" },

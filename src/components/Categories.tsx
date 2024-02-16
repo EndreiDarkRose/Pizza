@@ -1,5 +1,5 @@
 import React from "react";
-import { useWhyDidYouUpdate } from "ahooks";
+
 type CategoriesItem = {
   categoryId: number;
   onClickCategories: (index: number) => void;

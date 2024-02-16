@@ -1,5 +1,4 @@
 import React from "react";
-
 import qs from "qs";
 
 import Categories from "../components/Categories";
@@ -9,29 +8,29 @@ import ContentLoaderPizza from "../components/PizzaBlock/ContentLoader";
 import Search from "../components/Search";
 import Pagination from "../components/Pagination";
 
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../redux/store";
+import { useAppDispatch, useAppSelector } from "../utils/hookRedux";
+import { FetchPizzasArg, fetchPizzas } from "../redux/slice/pizzaSlice";
+import { useNavigate } from "react-router-dom";
+import { SortProp } from "../redux/slice/filterSlice";
 import {
   setCategoryId,
   setSortType,
   setCurrentPage,
   setFilters,
 } from "../redux/slice/filterSlice";
-import { FetchPizzasArg, fetchPizzas } from "../redux/slice/pizzaSlice";
-import { useNavigate } from "react-router-dom";
-import { SortProp } from "../redux/slice/filterSlice";
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   const [_, setIsLoading] = React.useState(true);
-  const { searchValue } = useSelector((state: any) => state.filter);
-  const { items, status } = useSelector((state: any) => state.pizza);
+  const { searchValue } = useAppSelector((state) => state.filter);
+  const { items, status } = useAppSelector((state) => state.pizza);
 
   const search = searchValue ? `&search=${searchValue}` : "";
-  const { categoryId, sortType, currentPage } = useSelector(
-    (state: any) => state.filter
+  const { categoryId, sortType, currentPage } = useAppSelector(
+    (state) => state.filter
   );
 
   const onClickCategories = React.useCallback((id: number) => {

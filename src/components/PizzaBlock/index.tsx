@@ -1,7 +1,8 @@
 import React from "react";
 import { CartItemProps, addItems } from "../../redux/slice/cartSlice";
-import { useSelector, useDispatch } from "react-redux";
+
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../utils/hookRedux";
 
 export type PizzaBlock = {
   imageUrl: string;
@@ -20,8 +21,8 @@ const PizzaBlock: React.FC<PizzaBlock> = ({ ...items }) => {
   const [activeSize, setActiveSize] = React.useState(0);
   const typeName = ["тонкое", "традиционное"];
   const size = [26, 30, 40];
-  const dispatch = useDispatch();
-  const countItems = useSelector((state: any) =>
+  const dispatch = useAppDispatch();
+  const countItems = useAppSelector((state) =>
     state.cart.items.find((obj: any) => obj.id === items.id)
   );
 

@@ -1,14 +1,18 @@
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "../utils/hookRedux";
 import { selectorCart } from "../redux/slice/cartSlice";
+import React from "react";
 const Header: React.FC = () => {
-  const { items, totalPrice } = useSelector(selectorCart);
-  const location = useLocation();
-  console.log(location);
+  const { items, totalPrice } = useAppSelector(selectorCart);
+  const isMountedItems = React.useRef(false);
 
   React.useEffect(() => {
-    const json = JSON.stringify(items);
-  }, []);
+    if (isMountedItems.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem("cart", json);
+    }
+    isMountedItems.current = true;
+  }, [items]);
   return (
     <div className="header">
       <div className="container">
@@ -55,12 +59,7 @@ const Header: React.FC = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>
-                {items.reduce(
-                  (sum: number, item: { count: number }) => sum + item.count,
-                  0
-                )}
-              </span>
+              <span>{items.reduce((sum, item) => sum + item.count, 0)}</span>
             </button>
           </div>
         </Link>

@@ -1,14 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { CartItemProps } from "../redux/slice/cartSlice";
 
 const PizzaInfo = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = React.useState<{
-    imageUrl: string;
-    name: string;
-    price: string;
-  }>();
+  const [pizza, setPizza] = React.useState<CartItemProps>();
   console.log(id);
   React.useEffect(() => {
     async function fetchPizzaInfo() {
@@ -22,21 +19,18 @@ const PizzaInfo = () => {
       }
     }
     fetchPizzaInfo();
-    console.log(pizza);
   }, []);
+
+  if (!pizza) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="container">
-      {pizza !== undefined ? (
-        <>
-          <img src={pizza.imageUrl}></img>
-          <h2>{pizza.name}</h2>
-          <p>{pizza.price} ₽</p>
-        </>
-      ) : (
-        <>
-          <h3>Загрузка...</h3>
-        </>
-      )}
+      <>
+        <img src={pizza.imageUrl}></img>
+        <h2>{pizza.name}</h2>
+        <p>{pizza.price} ₽</p>
+      </>
     </div>
   );
 };

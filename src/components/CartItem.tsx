@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../utils/hookRedux";
 import {
   addItems,
   minusItem,
@@ -16,7 +16,7 @@ const CartItem: React.FC<CartItemProps> = ({
   count,
   imageUrl,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickPlus = () => dispatch(addItems({ id } as CartItemProps));
   const onClickMinus = () => dispatch(minusItem({ id } as CartItemProps));
