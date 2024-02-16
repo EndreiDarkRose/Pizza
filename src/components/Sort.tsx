@@ -37,7 +37,7 @@ const Sort: React.FC<SortProps> = React.memo(
     return (
       <div className="sort" ref={sortRef}>
         <div className="sort__label">
-          <img src="assets/img/triangle.svg"></img>
+          <img src="./assets/img/triangle.svg"></img>
           <b>Сортировка по:</b>
           <span onClick={() => setOpenPopup(!openPopup)}>{sortType.name}</span>
         </div>

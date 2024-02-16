@@ -24,11 +24,11 @@ const Cart: React.FC = () => {
             <div className="cart">
               <div className="cart__top">
                 <div className="cart-left">
-                  <img src="/assets/img/delete-items.svg" alt="" />
+                  <img src="./assets/img/delete-items.svg" alt="" />
                   <h2 className="content__title">Корзина</h2>
                 </div>
                 <div className="cart__clear" onClick={onClickDeleteItems}>
-                  <img src="/assets/img/trash.svg" />
+                  <img src="./assets/img/trash.svg" />
                   <span>Очистить корзину</span>
                 </div>
               </div>
@@ -50,7 +50,7 @@ const Cart: React.FC = () => {
                 <div className="cart__bottom-buttons">
                   <Link to="/React-pizza">
                     <div className="button button--outline button--add go-back-btn">
-                      <img src="/assets/img/grey-arrow-left.svg" />
+                      <img src="./assets/img/grey-arrow-left.svg" />
                       <span>Вернуться назад</span>
                     </div>
                   </Link>

@@ -41,14 +41,14 @@ const CartItem: React.FC<CartItemProps> = ({
             className="button button--outline button--circle cart__item-count-minus"
             onClick={onClickMinus}
           >
-            <img src="/assets/img/minus-icon.svg"></img>
+            <img src="./assets/img/minus-icon.svg"></img>
           </button>
           <b>{count}</b>
           <div
             className="button button--outline button--circle cart__item-count-plus"
             onClick={onClickPlus}
           >
-            <img src="/assets/img/plus-icon.svg"></img>
+            <img src="./assets/img/plus-icon.svg"></img>
           </div>
         </div>
         <div className="cart__item-price">
@@ -59,7 +59,7 @@ const CartItem: React.FC<CartItemProps> = ({
             className="button button--outline button--circle"
             onClick={onClickDeleteItem}
           >
-            <img src="/assets/img/close-icon.svg"></img>
+            <img src="./assets/img/close-icon.svg"></img>
           </div>
         </div>
       </div>
